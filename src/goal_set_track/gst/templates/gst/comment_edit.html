@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+
+<div class='box-black-left'
+<h2>{{ title }}</h2>
+  <form method='POST' class="form-signin" action='{% url 'comment_edit' category.id task.id comment.id %}'>
+	{% csrf_token %}
+	  <input name="new_name" placeholder="{{ comment.text }}" type='text'/><br>
+      <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Editar</button>
+  </form>
+</div>
+
+{% endblock %}

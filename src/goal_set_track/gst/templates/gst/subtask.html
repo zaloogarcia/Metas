@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<div class='box-black-left'>
+  <h2>Categoría: {{ category.name }}</h2>
+  <h3 style="text-align:left;">Tarea: <strong>{{ task.name }}</strong></h3>
+  {% if task.deadline %}
+    <h4 style="text-align:left; color: red;"><strong>Expira:</strong> {{task.deadline}}<h4>
+  {% endif %}  
+  <h4 style="text-align:left; color:white;">Descripcion: {{task.description}}<h4>
+  <h4 style="text-align:left; color:white;">Progreso: {{task.progress}} % <h4>
+
+  <h4>Sub Tareas:</h4>
+  <ul class='list'>
+  {% for subtask in subtasks %}
+    <li>
+      <form style='display: inline;' action=''>
+        <button type='submit'value=True class='hvr-underline-from-left'/>{{ subtask.name }}</button>
+      </form>
+
+      <form style="display: inline;"  method='POST' action='{% url 'subtask_delete' category.id task.id subtask.id %}'>
+        {% csrf_token %}
+        <button type='submit' name='edit' value=True class="button-edit-task hvr-fade" style="vertical-align:middle" onclick="upisnik();">eliminar</button>
+      </form>
+
+      <form style="display: inline;" method='GET' action='{% url 'subtask_edit' category.id task.id subtask.id %}'>
+        {% csrf_token %}
+        <button type='submit' name='edit' value=True class="button-edit-task hvr-sweep-to-right" style="vertical-align:middle" onclick="upisnik();">editar</button>
+      </form>
+
+      {% if subtask.complete %}
+        <form style="display: inline;" method='POST' action='{% url 'subtask_edit' category.id task.id subtask.id %}'>
+          {% csrf_token %}
+          <button type='submit' name='complete' class='button-check glyphicon glyphicon-check'></button>
+        </form>
+      {% else %}
+        <form style="display: inline;" method='POST' action='{% url 'subtask_edit' category.id task.id subtask.id %}'>
+          {% csrf_token %}
+          <button type='submit' name='complete' value=True class='button-uncheck glyphicon glyphicon-unchecked'></button>
+        </form>
+      {% endif %}
+
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class='box-black-right'>
+  <form method='POST' class="form-signin" action='{% url 'subtask_create' category.id task.id %}'>
+  {% csrf_token %}
+    <h2 class="form-signin-heading">Sub Tarea nueva</h2>
+    <strong>Nombre:</strong> <input name="name" placeholder="Comprar verduras" required type='text'/><br>
+    <strong>Descripción:</strong> <input name="description" placeholder="Ir al super" type='text'/><br>
+    <strong>Fecha de vencimiento:</strong> <input name="deadline" placeholder="2018-12-23 17:09:45" type='datetime-local'/>
+    <strong>Notificarme:</strong> <input name="notify_user" type='checkbox'/><br>
+      <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Agregar</button>
+  </form>
+  <form method='POST' action='{% url 'comment_create' category.id task.id %}'>
+  {% csrf_token %}
+  <input name="text" placeholder="Crear comentario" required type='text'/><br>
+      <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Agregar</button>
+  </form>
+
+<ul>
+
+{% for comment in comments %}
+  <li>
+    <div class='ellipsis'>
+      <p style="display: inline-block;"> {{ comment.text }} </p><br>
+    </div>
+    <form style="display: inline;" method='GET' action='{% url 'comment_edit' category.id task.id comment.id %}'>
+      {% csrf_token %}
+      <button type='submit' name='edit' value=True class="button-edit-task hvr-sweep-to-right" style="vertical-align:middle" onclick="upisnik();">editar</button>
+    </form>
+
+    <form style="display: inline;" method='POST' action='{% url 'comment_delete' category.id task.id comment.id %}'>
+      {% csrf_token %}
+      <button type='submit' name='edit' value=True class="button-edit-task hvr-fade" style="vertical-align:middle" onclick="upisnik();">eliminar</button>
+    </form>
+    <br>
+  </li>
+{% endfor %}
+</ul>
+</div>
+
+{% endblock %}

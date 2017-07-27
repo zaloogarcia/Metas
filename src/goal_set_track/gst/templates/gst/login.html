@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+  {% load static %}
+  <link rel='stylesheet' href='{% static 'gst/login.css' %}'>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<h1>Bienvenido a <strong>GoalSetTrack</strong><h1>
+<div class='container container-fluid'>
+  <form action='{% url 'login' %}' method='POST' class="form-signin">
+    <h2 class="form-signin-heading">Porfavor,<br> Inicie su sesion</h2>
+    {% csrf_token %}
+    <label for="inputUsername" class="sr-only">Usuario</label>
+    <input id="inputUsername" name="username" placeholder="Nombre de Usuario" required autofocus type="text" class="form-control"/>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input id="inputPassword" name="password" placeholder="Password" required type="password" class="form-control"/>
+    <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Iniciar Sesion</button>
+  </form>
+</div>
+{% endblock %}

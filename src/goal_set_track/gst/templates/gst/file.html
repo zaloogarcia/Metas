@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+
+<div class='box-black-left'>
+<h3>Categoría: {{ category.name }}</h2>
+<h3>Tarea: {{ task.name }}</h3><br>
+<h4 style='color: white; text-align:left;'>Archivos adjuntos:</h4>
+  <ul>
+  {% for file in files %}
+    <li>
+
+      <h4 style='color: white; text-align:left;'>{{ file.name }}</h4>
+      <small>(Uploaded at: {{ file.uploaded_at }})</small><br>
+
+     <!-- button delete -->
+      <form style="display: inline;" method='POST' action='{% url 'file_delete' category.id task.id file.id %}'>
+    {% csrf_token %}
+        <button type='submit' name='edit' value=True class="button-edit-task hvr-fade" style="vertical-align:middle" onclick="upisnik();">eliminar</button>
+      </form>
+
+     <!-- button dowload -->
+      <form style="display: inline;" method='POST' action='{% url 'file_dowload' category.id task.id file.id %}'>
+    {% csrf_token %}
+        <button type='submit' name='attached_file' value=True class='button-download hvr-back-pulse'>descargar</button>
+      </form>
+
+     <!-- name -->
+
+
+
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+<div class='box-black-right'>
+  <form method="POST" class="form-signin" enctype="multipart/form-data" action='{% url 'file_add' category.id task.id %}'>
+    {% csrf_token %}
+    <h3 style='text-align: left;'>Agregar Archivo:</h3><br>
+    <h4 style='text-align: left; color: white;'>Descripcion:</h4><input name="name" placeholder=". . ." type='text'/><br>
+    <h4 style='text-align: left; color: white;'>Archivo:</h4><input class='hvr-back-pulse' type="file" name="file"><br>
+    <input class='btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse' style='color: black;' type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}

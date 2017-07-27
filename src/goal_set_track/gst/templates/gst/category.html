@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<div class='box-black-left'>
+  <h2>Categorías:</h2>
+  <ul class='list'>
+  {% for category in categories %}
+    <li>
+      {% if category.name == 'Goals' %}
+      
+        <form style='display: inline;' action='{% url 'task' category.id %}'>
+          <button type='submit'value=True class='hvr-underline-from-left'/>{{ category.name }}</button>
+        </form>
+      
+      {% else %}
+      
+         <form style='display: inline;' action='{% url 'task' category.id %}'>
+          <button type='submit'value=True class='hvr-underline-from-left'/>{{ category.name }}</button>
+        </form>
+      
+        <form style="display: inline;" method='POST' action='{% url 'category_delete' category.id %}'>
+          {% csrf_token %}
+          <button type='submit' name='edit' value=True class="button-edit-category hvr-fade" style="vertical-align:middle" onclick="upisnik();">eliminar</button>
+        </form>
+
+        <form style="display: inline;" method='GET' action='{% url 'category_edit' category.id %}'>
+          {% csrf_token %}
+          <button type='submit' name='edit' value=True class="button-edit-category hvr-sweep-to-right" style="vertical-align:middle" onclick="upisnik();">editar</button>
+        </form>
+      
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class='box-black-right'>
+  <form method='POST' class="form-signin" action='{% url 'category_create' %}'>
+  {% csrf_token %}
+    <h2 class="form-signin-heading">Categoría nueva</h2>
+    {% if error %}
+    <h2 class='title-red'>{{error}}</h2>
+    {% endif %}
+	  <label for="inputName" class="sr-only">Name</label>
+	  <input id="inputName" name="name" placeholder="Ej.: Compras" required type='text'/><br>
+
+      <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Agregar</button>
+  </form>
+</div>
+
+{% endblock %}

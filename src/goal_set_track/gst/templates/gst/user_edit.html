@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<div class='user-edit'>
+  <form method='POST' class="form-signin" action='{% url 'user_edit' %}'>
+  {% csrf_token %}
+    Editar Nombre: <input name="first_name" placeholder="{{ user.first_name }}" type='text'/><br>
+    Editar Apellido: <input name="last_name" placeholder="{{ user.last_name }}" type='text'/><br>
+    Editar Clave: <input name="password" placeholder="New password" type='password'/><br><br>
+    <button type='submit' name='edit' value=True class="button-edit hvr-sweep-to-right" style="vertical-align:middle" onclick="alert('Estas seguro?');">editar</button>
+  </form>
+</div>
+
+</body>
+{% endblock %}
+

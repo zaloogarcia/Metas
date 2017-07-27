@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<body>
+<div class='user'>
+  <h1>{{ user.first_name }}<h1><br>
+  <h4>Usted esta junto con nosotros desde<h4>
+  <button type='submit' name='edit' value=False class="button-edit hvr-icon-grow" style="vertical-align:middle">{{user.date_joined}}</button>
+</div>
+<div class='userinfo'>
+  <h3>Informacion del Perfil<h3>
+  <h4>Nombre de Usuario: {{user.username}}</h4>
+  <h4>Email: {{user.email}}</h4>
+  <h4>Nombre: {{user.first_name}}</h4>
+  <h4>Apellido: {{user.last_name}}</h4> 
+
+  <!-- button edit -->  
+  <form method='GET' action='{% url 'user_edit'%}'>
+    {% csrf_token %}
+    <button type='submit' name='edit' value=True class="button-edit hvr-sweep-to-right" style="vertical-align:middle" onclick="upisnik();">editar</button>
+  </form>
+</div>
+</body>
+{% endblock %}

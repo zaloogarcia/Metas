@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+
+<div class='box-black-left'>
+  <h2>{{ title }}</h2>
+
+  <form method='POST' class="form-signin" action='{% url 'subtask_edit' category.id task.id subtask.id %}'>
+    {% csrf_token %}
+    Nombre: <input name="new_name" placeholder="{{ subtask.name }}" type='text'/><br>
+    Descripción: <input name="new_description" placeholder="{{ subtask.description }}" type='text'/><br>
+    Fecha de vencimiento: <input name="new_deadline" placeholder="{{ subtask.deadline }}" type='datetime-local'/>
+    Notificarme: <input name="new_notify_user" placeholder="{{subtask.notify_user}}" type='checkbox'/><br>
+
+    <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Editar</button>
+  </form>
+</div>
+
+{% endblock %}

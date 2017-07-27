@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+    <title>GST {{ title }}</title>
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {% load static %}
+    {% if username %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'get_deadlines.js' %}"></script>
+    {% endif %}
+    <link rel='stylesheet' href="{% static 'gst/base.css' %}">
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

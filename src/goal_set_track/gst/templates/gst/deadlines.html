@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<div class='box-black-stadistics'>
+  <h1>Tenes {{ number_deadlines }} tareas/subtareas por vencer:</h1>
+
+  {% if task_deadlines %}
+  <h3 style='text-align:left;'>Tareas:</h3>
+  <ul>
+    {% for task in task_deadlines %}
+    <li>
+      <a style='color:red;' href="{% url 'subtask' task.category_id task.id %}">{{ task.name }}</a>
+      <small>({{ task.deadline}})</small><br>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if subtask_deadlines %}
+  <h3>Subtareas:</h3>
+  <ul>
+    {% for subtask in subtask_deadlines %}
+    <li>
+      <a href="{% url 'subtask' subtask.task.category.id subtask.task.id %}">{{ subtask.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

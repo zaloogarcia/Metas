@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+<div class='box-black-left'>
+  <h1>Progreso Mensual:</h1>
+
+  {% if created_tasks %}
+  <h3 style='text-align:left;'>Creadas:</h3>
+  <table>
+    <tr>
+      <th>Tarea</th>
+      <th>Fecha de Creacion</th>
+    </tr>
+    <hr>
+    {% for task in created_tasks %}
+    <tr>
+      <td><a href="{% url 'task' task.category_id %}">{{ task.name }}</a></td>
+      <td><p>{{ task.created_at }}</p></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if completed_tasks %}
+  <h3 style='text-align:left;'>Completas:</h3>
+  <table>
+    <tr>
+      <th>Tarea</th>
+      <th>Fecha de Creacion</th>
+    </tr>
+    <hr>
+    {% for task in completed_tasks %}
+    <tr>
+      <td><a href="{% url 'task' task.category_id %}">{{ task.name }}</a></td>
+      <td><p>{{ task.created_at }}</p></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+<div class='box-black-right'>
+  {% if failed_tasks %}
+  <h3 style='text-align:left; color: red;' >Fallidas:</h3>
+  <table>
+    <tr>
+      <th>Meta</th>
+      <th>Fecha de Creacion</th>
+    </tr>
+    <hr>
+    {% for task in failed_tasks %}
+    <tr>
+      <td><a href="{% url 'task' task.category_id %}">{{ task.name }}</a></td>
+      <td><p>{{ task.created_at }}</p></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <h3 style='text-align:left; color: red;'>Fallidas:</h3>
+  <h3 style='color:white;'> Perfecto!, nunca fallo una tarea, sigue asi.. </h3>
+  {% endif %}
+</div>
+{% endblock %}

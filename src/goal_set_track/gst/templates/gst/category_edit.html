@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static 'gst/style.css' %}'>
+
+<div class='box-black-left'>
+  <h2>Editar Categoria:<br> {{category.name}}</h2>
+
+  <form method='POST' class="form-signin" action='{% url 'category_edit' category.id %}'>
+  {% csrf_token %}
+    Nombre: <input name="new_name" placeholder="{{ category.name }}" type='text'/>
+
+      <button type="submit" class="btn btn-lg btn-default btn-block hvr-round-corners hvr-back-pulse">Editar</button>
+  </form>
+</div>
+
+{% endblock %}
